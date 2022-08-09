@@ -28,5 +28,32 @@ Acay <- Acay %>%
   select(c('Dates', 'ACI', 'ADI', 'BI'))
 
 # Necesitamos separar fecha de hora para, posteriormente, quedarnos con una franja horaria especifica
-  
+#Nos quedamos solo con un rango horario
 
+Cavernas %<>% filter(Dates>ymd_hms("2021:05:07 17:00:00")) %>% 
+  filter(Dates<ymd_hms("2021:05:07 21:00:00"))
+Mayuato %<>% filter(Dates>ymd_hms("2021:05:21 17:00:00")) %>% 
+  filter(Dates<ymd_hms("2021:05:21 21:00:00"))
+Astilleros %<>% filter(Dates>ymd_hms("2021:05:23 17:00:00")) %>% 
+  filter(Dates<ymd_hms("2021:05:23 21:00:00"))
+Acay %<>% filter(Dates>ymd_hms("2021:05:08 17:00:00")) %>% 
+  filter(Dates<ymd_hms("2021:05:08 21:00:00"))
+
+#Cambio el d[ia]
+
+Cavernas %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
+  mutate(Dates= ymd_hms(paste("2021:01:01 ",as.character(Dates@hour),":",as.character(Dates@minute), ":0")))
+Mayuato %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
+  mutate(Dates= ymd_hms(paste("2021:01:01 ",as.character(Dates@hour),":",as.character(Dates@minute), ":0")))
+Astilleros %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
+  mutate(Dates= ymd_hms(paste("2021:01:01 ",as.character(Dates@hour),":",as.character(Dates@minute), ":0")))
+Acay %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
+  mutate(Dates= ymd_hms(paste("2021:01:01 ",as.character(Dates@hour),":",as.character(Dates@minute), ":0")))
+
+
+ggplot() +
+  geom_line(data=Cavernas, aes(x=Dates, y=BI),color='green',size=1) +
+  geom_line(data=Mayuato, aes(x=Dates, y=BI),color='blue',size=1) +
+  geom_line(data=Astilleros, aes(x=Dates, y=BI),color='red',size=1) +
+  geom_line(data=Acay, aes(x=Dates, y=BI),color='black',size=1) +
+  theme_minimal()
