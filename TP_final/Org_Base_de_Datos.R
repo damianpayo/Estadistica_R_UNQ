@@ -50,6 +50,23 @@ Astilleros %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
 Acay %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
   mutate(Dates= ymd_hms(paste("2021:01:01 ",as.character(Dates@hour),":",as.character(Dates@minute), ":0")))
 
+#Armar un dataset por cada indicador bioacústico en los cuatro lugares.
+
+BI <- select(Astilleros, c(Dates, BI)) %>% rename("BI_Astilleros" = "BI") %>%
+  mutate(select(Acay, c(BI))) %>% rename("BI_Acay" = "BI")
+BI <-  merge(select(Mayuato, c(Dates, BI)), BI, all = TRUE) %>%
+  rename("BI_Mayuato" = "BI")
+BI <-  merge(select(Cavernas, c(Dates, BI)), BI, all = TRUE) %>%
+  rename("BI_Cavernas" = "BI")
+
+BI
+
+graph <- ggplot(BI, aes(x=Dates)) +
+  geom_line(aes(y=BI$BI_Cavernas)) + 
+  geom_line(aes(y=BI$BI_Mayuato)) + 
+  geom_line(aes(y=BI$BI_Astilleros)) + 
+  geom_line(aes(y=BI$BI_Acay))
+graph
 
 ggplot() +
   geom_line(data=Cavernas, aes(x=Dates, y=BI),color='green',size=1) +
@@ -57,3 +74,4 @@ ggplot() +
   geom_line(data=Astilleros, aes(x=Dates, y=BI),color='red',size=1) +
   geom_line(data=Acay, aes(x=Dates, y=BI),color='black',size=1) +
   theme_minimal()
+  
