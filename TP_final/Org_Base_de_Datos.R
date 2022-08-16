@@ -50,6 +50,7 @@ Astilleros %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
 Acay %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
   mutate(Dates= ymd_hms(paste("2021:01:01 ",as.character(Dates@hour),":",as.character(Dates@minute), ":0")))
 
+<<<<<<< Updated upstream
 #Armar un dataset por cada indicador bioacústico en los cuatro lugares.
 
 BI <- select(Astilleros, c(Dates, BI)) %>% rename("BI_Astilleros" = "BI") %>%
@@ -75,3 +76,19 @@ ggplot() +
   geom_line(data=Acay, aes(x=Dates, y=BI),color='black',size=1) +
   theme_minimal()
   
+=======
+Datos <- Cavernas %>% mutate(lugar = "Cavernas") %>% 
+  bind_rows(Mayuato %>% mutate(lugar = "Mayuato")) %>% 
+  bind_rows(Astilleros %>% mutate(lugar = "Astilleros")) %>% 
+  bind_rows(Acay %>% mutate(lugar = "Acay"))
+
+
+ggplot(data=Datos, aes(x=Dates, y=BI,group=lugar,color=lugar)) +
+  geom_line()+
+  theme_minimal()
+
+ggplot(data=Datos, aes(x=lugar, y=BI,color=lugar)) +
+  geom_point()+
+  geom_boxplot()+
+  theme_minimal()
+>>>>>>> Stashed changes
