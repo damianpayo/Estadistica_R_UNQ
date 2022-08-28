@@ -66,11 +66,15 @@ El repositorio completo de los materiales obtenidos estan disponibles en [GitHub
 
 Los datos relevados contemplan dos locaciones en la Reserva Natural **La Poma** (Acay y Cavernas) y dos locaciones en la Reserva Natural **Acambuco** (Mayuato y Quebrada de Astilleros). La Poma se encuentra en la region de la Puna, y Acambuco en la selva Yunga.
 
-```{r}
 
-# MAPA
+<div>
+<p style = 'text-align:center;'>
+**Mapa de Puntos Registrados**
+<p style = 'text-align:center;'>
+<img src="./Mapa.jpg" alt="JuveYell" width="1000px">
+</p>
+<div>
 
-```
 
 Acay es un lugar que corresponde a una cordillera de 3511 metros sobre el nivel del mar. Clima seco de matorrales secos y bajos (valles y matorrales de Puno), vientos fuertes. Durante el período de registro, el rango de temperatura fue de -3° C a 6° C, la humedad 20-40% y vientos entre 25 y 35 km/h. La hora del atardecer fue a las 18:53.
 
@@ -80,13 +84,13 @@ FALTAN LOS OTROS DOS LUGARES
 
 <div>
 <p style = 'text-align:center;'>
-<img src="./acambuco-5.jpeg" alt="JuveYell" width="300px">
-<img src="./acambuco-3.jpeg" alt="JuveYell" width="300px">
+<img src="./acambuco-5.jpeg" alt="JuveYell" width="400px">
+<img src="./acambuco-3.jpeg" alt="JuveYell" width="400px">
 </p>
 <p style = 'text-align:center;'>
-<img src="./_JMB7857.jpeg" alt="JuveYell" width="300px">
+<img src="./_JMB7857.jpeg" alt="JuveYell" width="400px">
 
-<img src="./_JMB7875.jpeg" alt="JuveYell" width="300px">
+<img src="./_JMB7875.jpeg" alt="JuveYell" width="400px">
 <p style = 'text-align:center;'>
 **Imagen 1**: Locaciones donde fueron realizadas las grabaciones. <br>
 Arriba: Acambuco: Sendero Mayuato (Izq), Quebrada de Astilleros (Der). Abajo: La Poma: Acay (Izq), Cavernas (Der)

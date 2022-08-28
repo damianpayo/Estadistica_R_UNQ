@@ -1,5 +1,6 @@
 library(tidyverse)
 library(lubridate)
+library(Routliers)
 
 Cavernas <- read_csv(file = '07-05-2021_Cavernas.csv')
 Mayuato <- read_csv(file = '23-05-21_Sendero_Mayuato.csv')
@@ -50,45 +51,84 @@ Astilleros %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
 Acay %<>% mutate(Dates= hm(format(Dates,"%H:%M"))) %>%
   mutate(Dates= ymd_hms(paste("2021:01:01 ",as.character(Dates@hour),":",as.character(Dates@minute), ":0")))
 
-<<<<<<< Updated upstream
-#Armar un dataset por cada indicador bioacústico en los cuatro lugares.
+#Hacemos un unico dataset
 
-BI <- select(Astilleros, c(Dates, BI)) %>% rename("BI_Astilleros" = "BI") %>%
-  mutate(select(Acay, c(BI))) %>% rename("BI_Acay" = "BI")
-BI <-  merge(select(Mayuato, c(Dates, BI)), BI, all = TRUE) %>%
-  rename("BI_Mayuato" = "BI")
-BI <-  merge(select(Cavernas, c(Dates, BI)), BI, all = TRUE) %>%
-  rename("BI_Cavernas" = "BI")
-
-BI
-
-graph <- ggplot(BI, aes(x=Dates)) +
-  geom_line(aes(y=BI$BI_Cavernas)) + 
-  geom_line(aes(y=BI$BI_Mayuato)) + 
-  geom_line(aes(y=BI$BI_Astilleros)) + 
-  geom_line(aes(y=BI$BI_Acay))
-graph
-
-ggplot() +
-  geom_line(data=Cavernas, aes(x=Dates, y=BI),color='green',size=1) +
-  geom_line(data=Mayuato, aes(x=Dates, y=BI),color='blue',size=1) +
-  geom_line(data=Astilleros, aes(x=Dates, y=BI),color='red',size=1) +
-  geom_line(data=Acay, aes(x=Dates, y=BI),color='black',size=1) +
-  theme_minimal()
-  
-=======
 Datos <- Cavernas %>% mutate(lugar = "Cavernas") %>% 
   bind_rows(Mayuato %>% mutate(lugar = "Mayuato")) %>% 
   bind_rows(Astilleros %>% mutate(lugar = "Astilleros")) %>% 
   bind_rows(Acay %>% mutate(lugar = "Acay"))
 
+# Primer vistazo a los datos
 
-ggplot(data=Datos, aes(x=Dates, y=BI,group=lugar,color=lugar)) +
+Datos %>% summary()
+
+# Distribuciones / Variabilidad
+
+Datos %>% 
+  ggplot(aes(x = ACI, fill=lugar)) +
+  geom_histogram(binwidth = 10) +
+  theme_minimal()
+
+Datos %>% 
+  ggplot(aes(x = ADI, fill=lugar)) +
+  geom_histogram(binwidth = 0.1) +
+  theme_minimal()
+
+Datos %>% 
+  ggplot(aes(x = BI, fill=lugar)) +
+  geom_histogram(binwidth = 1) +
+  theme_minimal()
+
+# Calculamos los outliers 
+
+outliers <- outliers_mad(Datos$ACI)
+outliers
+
+outliers <- outliers_mad(Acay$ADI)
+outliers
+
+outliers <- outliers_mad(Acay$BI)
+outliers
+
+
+plot_outliers_mad(outliers, Acay$ACI)
+
+
+# evolucion temporal
+
+ggplot(data=Datos %>% filter(ACI<300), aes(x=Dates, y=ACI,group=lugar,color=lugar)) +
   geom_line()+
   theme_minimal()
 
-ggplot(data=Datos, aes(x=lugar, y=BI,color=lugar)) +
-  geom_point()+
-  geom_boxplot()+
+ggplot(data=Datos %>% filter(ADI>1), aes(x=Dates, y=ADI,group=lugar,color=lugar)) +
+  geom_line()+
   theme_minimal()
->>>>>>> Stashed changes
+
+ggplot(data=Datos %>% filter(BI<6), aes(x=Dates, y=BI,group=lugar,color=lugar)) +
+  geom_line()+
+  theme_minimal()
+
+
+
+# Boxplot / Covarianza
+
+graph_ACI_boxplot <- ggplot(data=Datos%>% filter(ACI<300), aes(x=lugar, y=ACI, color=lugar)) +
+  geom_boxplot(width = 0.5, outlier.alpha = 0)+
+  geom_jitter(position=position_jitter(0.1), size=0.8, alpha=0.9, pch=19)+
+  theme_minimal()
+graph_ACI_boxplot
+
+graph_ADI_boxplot <- ggplot(data=Datos, aes(x=lugar, y=ADI, color=lugar)) +
+  geom_boxplot(width = 0.5, outlier.alpha = 0)+
+  geom_jitter(position=position_jitter(0.1), size=0.8, alpha=0.9, pch=19)+
+  theme_minimal()
+graph_ADI_boxplot
+
+graph_BI_boxplot <- ggplot(data=Datos%>% filter(BI<6), aes(x=lugar, y=BI, color=lugar)) +
+  geom_boxplot(width = 0.5, outlier.alpha = 0)+
+  geom_jitter(position=position_jitter(0.1), size=0.8, alpha=0.9, pch=19)+
+  theme_minimal()
+graph_BI_boxplot
+
+# Boxplotear cada dos horas
+
