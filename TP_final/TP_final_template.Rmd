@@ -749,7 +749,9 @@ Haciendo mención a las franjas horarias (Dia/Noche): <br>
   - El Indice de Distribución Acústica (ADI), expone un crecimiento notorio para Acay entre Dia y Noche, en comparación con el resto de las locaciones. A partir de la escucha de las resultantes sonoras, es posible atribuir dicha diferencia, a los fuertes vientos registrados en Acay. De hecho, el aumento durante la noche, está relacionada con el cese de fuertes vientos. <br>
   - El estudio de regresión lineal a partir del análisis del Indice de Complejidad Acústica (ACI), agrupando por regiones, arroja dos comportamientos divergentes entre Puna y Yunga. Partiendo de la hipótesis planteada, es observable que la región de la Puna se ciñe al comportamiento presuesto (mayor actividad biofona durante el día que en la noche), sin embargo, la región de Yungas, presenta un aumento en ACI durante la noche en comparación al día. Cotejando con las grabaciones de campo, notamos mayor actividad de anuros e insectos en esa franja horaria, sobre todo en Astileros. <br>
 <br>
+
 ## DISCUSIÓN
+
 <br>
 Por último, para cotejar que los cambios de actividad por franja horaria están fuertemente ligados a la región, realizamos un t-test aunando valores de Dia/Noche de todas las locaciones. Al realizar una regresión lineal observamos que las pendientes son opuestas, por lo que concluimos que no es recomendable inferir la actividad sonora por franja horaria sin tener en cuenta cada región. Asimismo creemos importante, para futuras investigaciones, considera la epoca del año, ya que estos registros fueron realizados en otoño y es muy factible que su actividad se vea considerablemten modificada en otras estaciones.
 
