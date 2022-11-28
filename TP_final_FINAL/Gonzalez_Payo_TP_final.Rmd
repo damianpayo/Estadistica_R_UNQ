@@ -407,7 +407,7 @@ ggdensity(Datos,
 ```
 
 **Fig 7**: Gráfico de densidad de los datos ACI de las cuatro locaciones a evaluar. <br>
-Puede notarse en este caso que las medias de todas las respuestas distan de su distribución.
+Puede notarse en este caso que las medias muestrales y los desvios standard de todas las respuestas distan de su distribución.
 Asimismo, es notoria la diferencia en la distribución de los valores obtenidos en Acay en relación
 a las otras locaciones.
 
@@ -533,6 +533,7 @@ graph_region_ADI <- ggplot(Datos_region_ADI, aes(x = region, y = ADI, color = re
 
 graph_region_ACI + graph_region_ADI
 ```
+**Fig 8**: Relación del analisis de ACI (Izq) y ADI (Der) por región, En ACI pueden notarse distribuciones similares con valores mayores para la región de Yungas que Puna. En cuando a ADI, es posible inferir una distribución mucho mayor en la región de Puna que en Yungas, Si bien la media expone notorias diferencias, en la Región de Puna se visibilizan valores carcanos a los de Yungas. Esto ultimo se debe a las notorias diferencias entre Acay y Cavernas dentro de la primera región.
 
 ### Análisis [H2]
  
@@ -663,6 +664,10 @@ graph_ADI_Noche_puna <- ggplot(data=puna_ADI %>% filter(Dates>ymd_hms('2021-01-0
 
 graph_ACI_Tarde_yunga + graph_ACI_Noche_yunga + 
   plot_annotation(title = 'ACI Yungas')
+```
+**Fig 9**: Regresión lineal de los datos de ACI obtenidos para las dos locaciónes de Yungas a partir de franjas horarias: Tarde (Izq) y Noche (Der). Es posible notar un comportamiento creciente hacia la noche en Astilleros, distinto de los datos recogidos en Mayuato. 
+
+```{r, fig.align ='center', message=FALSE}
 
 summary(Mayuato_ACI_Tarde)
 summary(Astilleros_ACI_Tarde)
@@ -671,6 +676,10 @@ summary(Astilleros_ACI_Noche)
 
 graph_ACI_Tarde_puna + graph_ACI_Noche_puna +
   plot_annotation(title = 'ACI Puna')
+```
+**Fig 10**: Regresión lineal de los datos de ACI obtenidos para las dos locaciónes de Puna a partir de franjas horarias: Tarde (Izq) y Noche (Der). A diferencia del caso anterior, pueden notarse comportamienbtos similares en ambas locaciones: crecientes en la tarde y decreciantes en horas de la noche.
+
+```{r, fig.align ='center', message=FALSE}
 
 summary(Acay_ACI_Tarde)
 summary(Cavernas_ACI_Tarde)
@@ -679,6 +688,10 @@ summary(Cavernas_ACI_Noche)
 
 graph_ADI_Tarde_yunga + graph_ADI_Noche_yunga +
   plot_annotation(title = 'ADI Yunga')
+```
+**Fig 11**: Regresión lineal de los datos de ADI obtenidos para las dos locaciónes de Yungas a partir de franjas horarias: Tarde (Izq) y Noche (Der). Estos datos arrojan un comportamiento inverso al observado en ACI ya que Astilleros presenta un comportamiento decreciente hacia la noche. Mayuato mantiene sus datos estables durante toda la medición.
+
+```{r, fig.align ='center', message=FALSE}
 
 summary(Mayuato_ADI_Tarde)
 summary(Astilleros_ADI_Tarde)
@@ -693,10 +706,13 @@ summary(Cavernas_ADI_Tarde)
 summary(Acay_ADI_Noche)
 summary(Cavernas_ADI_Noche)
 ```
+**Fig 12**: Regresión lineal de los datos de ADI obtenidos para las dos locaciónes de Puna a partir de franjas horarias: Tarde (Izq) y Noche (Der). Aqui es posible inferir un comportamiento similar en ambas locaciónes. Si bien, los datos difieren entre Acay y Cavernas, ambas presentan un comportamiento similar, sin exponer variaciones entre franjas horarias.
+
 A partir de una regresión lineal entre el total de los valores por región, los resultados arrojados informan un crecimiento  de ACI mayor entre dia y noche para la región de Yungas que para las locaciones de Puna. En cuanto a el Indice de Diversidad Acústica (ADI), las regresiones lineales no permiten inferir resultados significativos.
 
 ```{r, fig.align ='center', message=FALSE}
 
+#Graficadores de ACI
 graph_ACI_Region <- Datos_region_ACI %>%
   mutate(franja_horaria = factor(franja_horaria)) %>%
   ggplot(aes(x = as.numeric(franja_horaria) - 1,
@@ -710,8 +726,11 @@ graph_ACI_Region <- Datos_region_ACI %>%
   labs(x = "Franja Horaria",
        y = "ACI")
 graph_ACI_Region
+```
+**Fig 13**: Valores de ACI agrupador por región según franja horaria.
 
-#ACI
+```{r, fig.align ='center', message=FALSE}
+#T.Test de ACI
 
 Dia_ACI_Yunga <- Datos_region_ACI %>% filter(franja_horaria=="Dia",region=="Yunga")
 Noche_ACI_Yunga <- Datos_region_ACI %>% filter(franja_horaria=="Noche",region=="Yunga")
@@ -721,40 +740,64 @@ Dia_ACI_Puna <- Datos_region_ACI %>% filter(franja_horaria=="Dia",region=="Yunga
 Noche_AC_Puna <- Datos_region_ACI %>% filter(franja_horaria=="Noche",region=="Yunga")
 t.test(Dia_ACI_Puna$ACI, Noche_AC_Puna$ACI)
 
+```
 
-Fig.ay <- Datos_region_ADI %>%
-  mutate(franja_horaria = factor(franja_horaria)) %>%
-  filter(lugar!="Cavernas") %>%
-  ggplot(aes(x = as.numeric(franja_horaria) - 1,
-             y = ADI, color=region,show.legend=FALSE)) +
-  geom_point(position = position_jitter(width = 0.15),show.legend=FALSE) +
-  ylim(0.5,2.3)+
-  geom_smooth(method = lm, se = FALSE, fullrange = TRUE,show.legend=FALSE) +
-  scale_x_continuous(breaks = c(0, 1), 
-                     minor_breaks = c(0, 1),
-                     limits = c(-0.2, 1.2),
-                     labels = c("Dia", "Noche")) +
-  labs(x = "Franja Horaria",
-       y = "ADI",title="Acay")
+```{r, fig.align ='center', message=FALSE}
 
-Fig.cnas <- Datos_region_ADI %>%
+#Graficadores de ADI
+
+graph_ADI_Region <- Datos_region_ADI %>%
   mutate(franja_horaria = factor(franja_horaria)) %>%
-  filter(lugar!="Acay") %>%
   ggplot(aes(x = as.numeric(franja_horaria) - 1,
              y = ADI, color=region)) +
   geom_point(position = position_jitter(width = 0.15)) +
-  ylim(0.5,2.3)+
   geom_smooth(method = lm, se = FALSE, fullrange = TRUE) +
   scale_x_continuous(breaks = c(0, 1), 
                      minor_breaks = c(0, 1),
                      limits = c(-0.2, 1.2),
                      labels = c("Dia", "Noche")) +
   labs(x = "Franja Horaria",
-       y = "ADI",title="Cavernas")
+       y = "ADI")
+graph_ADI_Region
 
-Fig.ay | Fig.cnas
+## Esto lo elimine porque no de de donde viene!
+# Fig.ay <- Datos_region_ADI %>%
+#   mutate(franja_horaria = factor(franja_horaria)) %>%
+#   filter(lugar!="Cavernas") %>%
+#   ggplot(aes(x = as.numeric(franja_horaria) - 1,
+#              y = ADI, color=region,show.legend=FALSE)) +
+#   geom_point(position = position_jitter(width = 0.15),show.legend=FALSE) +
+#   ylim(0.5,2.3)+
+#   geom_smooth(method = lm, se = FALSE, fullrange = TRUE,show.legend=FALSE) +
+#   scale_x_continuous(breaks = c(0, 1), 
+#                      minor_breaks = c(0, 1),
+#                      limits = c(-0.2, 1.2),
+#                      labels = c("Dia", "Noche")) +
+#   labs(x = "Franja Horaria",
+#        y = "ADI",title="Acay")
+# 
+# Fig.cnas <- Datos_region_ADI %>%
+#   mutate(franja_horaria = factor(franja_horaria)) %>%
+#   filter(lugar!="Acay") %>%
+#   ggplot(aes(x = as.numeric(franja_horaria) - 1,
+#              y = ADI, color=region)) +
+#   geom_point(position = position_jitter(width = 0.15)) +
+#   ylim(0.5,2.3)+
+#   geom_smooth(method = lm, se = FALSE, fullrange = TRUE) +
+#   scale_x_continuous(breaks = c(0, 1), 
+#                      minor_breaks = c(0, 1),
+#                      limits = c(-0.2, 1.2),
+#                      labels = c("Dia", "Noche")) +
+#   labs(x = "Franja Horaria",
+#        y = "ADI",title="Cavernas")
+# 
+# Fig.ay | Fig.cnas
+```
+**Fig 14`**: Valores de ADI agrupados por región y Franja Horaria.
 
-#ADI
+```{r, fig.align ='center', message=FALSE}
+
+#T.Test de ADI
 
 Dia_ADI_Yunga <- Datos_region_ADI %>% filter(franja_horaria=="Dia",region=="Yunga")
 Noche_ADI_Yunga <- Datos_region_ADI %>% filter(franja_horaria=="Noche",region=="Yunga")
