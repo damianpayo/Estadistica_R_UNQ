@@ -13,7 +13,6 @@ editor_options:
     wrap: 72
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -36,6 +35,7 @@ franja horaria (dia/noche), teniendo en cuenta modelos de regresión
 lineal.
 
 ## DATOS
+
 ### Indices de Análisis
 
 Se realizó un trabajo de analisis a partir de 2 indicadores de actividad
@@ -83,14 +83,19 @@ Poma** (Acay y Cavernas) y dos locaciones en la Reserva Natural
 **Acambuco** (Mayuato y Quebrada de Astilleros).
 
 <div>
+
 <p style="text-align:center;">
+
 <img src="./img/Mapa.jpg" alt="JuveYell" width="1000px"/>
+
 </p>
+
 **Fig 1**: Mapa de Puntos Registrados
+
 <div>
-<br>
-Acay y Cavernas, pertenecen al Area Natural Protegida **La Poma**: una
-cordillera de 3511 metros sobre el nivel del mar, clima seco de
+
+<br> Acay y Cavernas, pertenecen al Area Natural Protegida **La Poma**:
+una cordillera de 3511 metros sobre el nivel del mar, clima seco de
 matorrales secos y bajos (valles y matorrales de Puno) y vientos
 fuertes. Durante el período de registro, el rango de temperatura fue de
 -3° C a 6° C, la humedad 20-40% y vientos entre 25 y 35 km/h. La caida
@@ -132,9 +137,9 @@ El registro original comprende 10 horas en Quebrada de Astilleros (de
 en Acay (de 11:00 a 3:00), y 18 horas en Cavernas (de 16:00 a 10:00).
 Todas las grabaciones se realizaron en Mayo del 2021.
 
-Asimismo, de cada muestra se midieron 9 indices: <br>- Indice de Diversidad
-Acústica (ACI) <br> - Indice Bioacústico (BI) <br> - Índice de
-Diferencia Normalizada de Paisaje Sonoro (DNSI) <br> - Indice de
+Asimismo, de cada muestra se midieron 9 indices: <br>- Indice de
+Diversidad Acústica (ACI) <br> - Indice Bioacústico (BI) <br> - Índice
+de Diferencia Normalizada de Paisaje Sonoro (DNSI) <br> - Indice de
 Igualdad Acústica (AEI) <br> - Indice de Diversidad Acústica (ADI)
 <br> - Entropía Espectral (HS) <br> - Entropía Temporal (HT) <br> -
 Centroide Espectral (SC) <br> - Decibeles Full Scale (dBFS) <br>
@@ -143,13 +148,12 @@ El sistema Sentinel relevó un archivo de audio cada 60 segundos. Es
 decir, se obtuvieron 36 observaciones cada 60 segundos (9 indices x 4
 locaciones).
 
-Previamente se realizó un analisis de correlación de parametros para 
-determinar el comportamiento de los mismos.<br> 
-Para responder a la hipotesis planteada, se decidió tomar los indicadores 
-ACI y ADI, ya que el primero se focaliza en la variación temporal de la 
-intensidad (ACI) mientras que el segundo, en las varaciones de intensidad 
-por bandas de frecuencia (ADI).
-
+Previamente se realizó un analisis de correlación de parametros para
+determinar el comportamiento de los mismos.<br> Para responder a la
+hipotesis planteada, se decidió tomar los indicadores ACI y ADI, ya que
+el primero se focaliza en la variación temporal de la intensidad (ACI)
+mientras que el segundo, en las varaciones de intensidad por bandas de
+frecuencia (ADI).
 
 ```{r, message=FALSE}
 #Carga de planillas .csv
@@ -177,20 +181,23 @@ Indices <- Ind %>% select(ACI, BI, DNSI, AEI, ADI, HS, HT, SC, dBFS)
 Indices_cor <- cor(Indices)
 corrplot.mixed(Indices_cor)
 ```
-**fig 3**: Gráfica comparativa de correlación de los parámetros analizados.<br>
-Pueden observarse comportamientos directamente correlacionados entre HS-ADI, SC-DNSI, SC-HS.<br>
-Pueden observarse comportamientos inversamente correlacionados entre ADI-AEI, SC-dBFS, dBFS-HS, BI-HT.<br>
+
+**fig 3**: Gráfica comparativa de correlación de los parámetros
+analizados.<br> Pueden observarse comportamientos directamente
+correlacionados entre HS-ADI, SC-DNSI, SC-HS.<br> Pueden observarse
+comportamientos inversamente correlacionados entre ADI-AEI, SC-dBFS,
+dBFS-HS, BI-HT.<br>
 
 Para llevar a cabo una comparacion mas controlada, se tomó el mismo
 período de tiempo de 4 horas en cada locación, mas precisamente de 17 a
 21hs. Este lapso nos es particularmente de interes ya que contempla una
 fraccion con luz solar y otra ya de noche.
 
-De los datos originales obtenidos en formato .csv fue preciso: <br> - Agregar
-una fila (header) con cada indice <br> - Filtrar, de todos los indices
-obtenidos, sólo los dos a evaluar. <br> - Realizar un filtrado de 4 horas por
-locación, entre 17 y 21hs. <br> - Modificar el formato de Fecha y Hora con la
-librería 'lubridate'.
+De los datos originales obtenidos en formato .csv fue preciso: <br> -
+Agregar una fila (header) con cada indice <br> - Filtrar, de todos los
+indices obtenidos, sólo los dos a evaluar. <br> - Realizar un filtrado
+de 4 horas por locación, entre 17 y 21hs. <br> - Modificar el formato de
+Fecha y Hora con la librería 'lubridate'.
 
 ```{r, fig.align ='center', message=FALSE}
 
@@ -307,9 +314,10 @@ ACI_boxplot_sinO <- Datos_ACI%>%
 ACI_boxplot + ACI_boxplot_sinO
 
 ```
-**Fig 4**: Observaciones del parametro ACI para todas las locaciones.<br>
-Puede observarse a la izquierda (puntos negros) los valores con outliers, y a 
-la derecha los valores sin outliers.
+
+**Fig 4**: Observaciones del parametro ACI para todas las
+locaciones.<br> Puede observarse a la izquierda (puntos negros) los
+valores con outliers, y a la derecha los valores sin outliers.
 
 ```{r, fig.align ='center', message=FALSE}
 
@@ -367,19 +375,22 @@ ADI_boxplot_sinO <- Datos_ADI%>%
   theme_minimal()
 ADI_boxplot + ADI_boxplot_sinO
 ```
-**Fig 5**: Observaciones del parametro ADI para todas las locaciones.<br>
-Puede observarse a la izquierda (puntos negros) los valores con outliers, y a 
-la derecha los valores sin outliers.
 
+**Fig 5**: Observaciones del parametro ADI para todas las
+locaciones.<br> Puede observarse a la izquierda (puntos negros) los
+valores con outliers, y a la derecha los valores sin outliers.
 
 ## HIPÓTESIS
 
 Se exponen dos hipotesis a partir del analisis de los datos:
 
 **H1:** La actividad Biófona es mayor en las locaciones pertenecientes a
-la región de Yunga que en Puna. <br> <br> **H2:** La Actividad Biófona es mayor durante el dia (17-19hs) en comparación con las horas de la noche (19-21hs) <br>
+la región de Yunga que en Puna. <br> <br> **H2:** La Actividad Biófona
+es mayor durante el dia (17-19hs) en comparación con las horas de la
+noche (19-21hs) <br>
 
 ## ANÁLISIS DE DATOS
+
 ### Análisis [H1]
 
 Graficamos las densidades de cada índice con la media de cada lugar.
@@ -393,9 +404,10 @@ ggdensity(Datos_ACI,
           fill = "lugar")
 ```
 
-**Fig 6**: Gráfico de densidad de los datos ACI de las cuatro locaciones a evaluar. <br>
-Puede notarse que las medias de Mayuato y Cavernas reponden a una distribución normal, sin embargo, 
-las medias de Astilleros y Acay distan de su distribución.
+**Fig 6**: Gráfico de densidad de los datos ACI de las cuatro locaciones
+a evaluar. <br> Puede notarse que las medias de Mayuato y Cavernas
+reponden a una distribución normal, sin embargo, las medias de
+Astilleros y Acay distan de su distribución.
 
 ```{r, fig.align ='center', message=FALSE}
 ggdensity(Datos, 
@@ -406,31 +418,35 @@ ggdensity(Datos,
           fill = "lugar")
 ```
 
-**Fig 7**: Gráfico de densidad de los datos ACI de las cuatro locaciones a evaluar. <br>
-Puede notarse en este caso que las medias muestrales y los desvios standard de todas las respuestas distan de su distribución.
-Asimismo, es notoria la diferencia en la distribución de los valores obtenidos en Acay en relación
-a las otras locaciones.
+**Fig 7**: Gráfico de densidad de los datos ACI de las cuatro locaciones
+a evaluar. <br> Puede notarse en este caso que las medias muestrales y
+los desvios standard de todas las respuestas distan de su distribución.
+Asimismo, es notoria la diferencia en la distribución de los valores
+obtenidos en Acay en relación a las otras locaciones.
 
-A partir de estos valores, determinamos una distribución normal para cada lugar, con su media y desviación estandar:
+A partir de estos valores, determinamos una distribución normal para
+cada lugar, con su media y desviación estandar:
 
 ```{r, fig.align ='center', message=FALSE}
-estadistica_ACI <- Datos_ACI %>% 
+Datos_ACI %>% 
   group_by(lugar) %>%
   summarise(M = mean(ACI), S = sd(ACI), n = n(), .groups="keep")
 
-estadistica_ADI <- Datos_ADI %>% 
+Datos_ADI %>% 
   group_by(lugar) %>%
   summarise(M = mean(ADI), S = sd(ADI), n = n(), .groups="keep")
-
-estadistica_ADI
-estadistica_ACI
 ```
+
 Finalmente hacemos un t-test cruzando los datos de las 4 locaciones.
 
 <div>
+
 <br>
+
 <p style = 'text-align:center;'>
+
 **T test para Valores ACI entre Locaciones**
+
 <div>
 
 ```{r, fig.align ='center', message=FALSE}
@@ -443,9 +459,13 @@ t.test(x=Cavernas$ACI, y = Mayuato$ACI)
 ```
 
 <div>
+
 <br>
+
 <p style = 'text-align:center;'>
+
 **T test para Valores ACI entre Regiones**
+
 <div>
 
 ```{r, message=FALSE}
@@ -476,9 +496,13 @@ t.test(x=yunga_ADI$ADI, y=puna_ADI$ADI)
 ```
 
 <div>
+
 <br>
+
 <p style = 'text-align:center;'>
+
 **T test para Valores ADI entre Locaciones**
+
 <div>
 
 ```{r, fig.align ='center', message=FALSE}
@@ -491,9 +515,13 @@ t.test(x=Cavernas$ADI, y = Mayuato$ADI)
 ```
 
 <div>
+
 <br>
+
 <p style = 'text-align:center;'>
+
 **T test para Valores ADI entre Regiones**
+
 <div>
 
 ```{r, fig.align ='center', message=FALSE}
@@ -533,11 +561,42 @@ graph_region_ADI <- ggplot(Datos_region_ADI, aes(x = region, y = ADI, color = re
 
 graph_region_ACI + graph_region_ADI
 ```
-**Fig 8**: Relación del analisis de ACI (Izq) y ADI (Der) por región, En ACI pueden notarse distribuciones similares con valores mayores para la región de Yungas que Puna. En cuando a ADI, es posible inferir una distribución mucho mayor en la región de Puna que en Yungas, Si bien la media expone notorias diferencias, en la Región de Puna se visibilizan valores carcanos a los de Yungas. Esto ultimo se debe a las notorias diferencias entre Acay y Cavernas dentro de la primera región.
+
+**Fig 8**: Relación del analisis de ACI (Izq) y ADI (Der) por región, En
+ACI pueden notarse distribuciones similares con valores mayores para la
+región de Yungas que Puna. En cuanto a ADI, es posible inferir una
+distribución mucho mayor en la región de Puna que en Yungas, Si bien la
+media expone notorias diferencias, en la Región de Puna se visibilizan
+valores carcanos a los de Yungas. Esto ultimo se debe a las notorias
+diferencias entre Acay y Cavernas dentro de la primera región.
+
+```{r, fig.align ='center', message=FALSE}
+
+coef_lugar <- Datos %>%
+  filter(outlier_ACI == FALSE & outlier_ADI == FALSE) %>%
+  lm(ACI ~ ADI + lugar, .)
+summary(coef_lugar)
+
+graph_cruzados <- 
+  Datos %>% 
+  filter(outlier_ACI == FALSE & outlier_ADI == FALSE) %>%
+  ggplot(aes(x = ADI,
+             y = ACI,
+             color=lugar,
+             shape=region)) +
+  scale_shape_manual(values=c(24, 21, 24, 21)) +
+  geom_point()
+graph_cruzados
+
+```
+**Fig 9**: comparación de los valores ACI y ADI para las distintas regiones (Puna=Triangulos, Yunga=Circulos). En esta gráfica puede inferirse un comportamiento determinado por regiones en los valres de ACI, no asi en los resultados obtenidos en ADI.
+
 
 ### Análisis [H2]
- 
-Realizamos una revisión de los datos mediante un modelo de regresión lineal, tomando en cuenta la información del Día (primeras dos horas) vs Noche (segundas dos horas)
+
+Realizamos una revisión de los datos mediante un modelo de regresión
+lineal, tomando en cuenta la información del Día (primeras dos horas) vs
+Noche (segundas dos horas)
 
 ```{r, fig.align ='center', message=FALSE}
 
@@ -665,7 +724,11 @@ graph_ADI_Noche_puna <- ggplot(data=puna_ADI %>% filter(Dates>ymd_hms('2021-01-0
 graph_ACI_Tarde_yunga + graph_ACI_Noche_yunga + 
   plot_annotation(title = 'ACI Yungas')
 ```
-**Fig 9**: Regresión lineal de los datos de ACI obtenidos para las dos locaciónes de Yungas a partir de franjas horarias: Tarde (Izq) y Noche (Der). Es posible notar un comportamiento creciente hacia la noche en Astilleros, distinto de los datos recogidos en Mayuato. 
+
+**Fig 10**: Regresión lineal de los datos de ACI obtenidos para las dos
+locaciónes de Yungas a partir de franjas horarias: Tarde (Izq) y Noche
+(Der). Es posible notar un comportamiento creciente hacia la noche en
+Astilleros, distinto de los datos recogidos en Mayuato.
 
 ```{r, fig.align ='center', message=FALSE}
 
@@ -677,7 +740,12 @@ summary(Astilleros_ACI_Noche)
 graph_ACI_Tarde_puna + graph_ACI_Noche_puna +
   plot_annotation(title = 'ACI Puna')
 ```
-**Fig 10**: Regresión lineal de los datos de ACI obtenidos para las dos locaciónes de Puna a partir de franjas horarias: Tarde (Izq) y Noche (Der). A diferencia del caso anterior, pueden notarse comportamienbtos similares en ambas locaciones: crecientes en la tarde y decreciantes en horas de la noche.
+
+**Fig 11**: Regresión lineal de los datos de ACI obtenidos para las dos
+locaciónes de Puna a partir de franjas horarias: Tarde (Izq) y Noche
+(Der). A diferencia del caso anterior, pueden notarse comportamienbtos
+similares en ambas locaciones: crecientes en la tarde y decreciantes en
+horas de la noche.
 
 ```{r, fig.align ='center', message=FALSE}
 
@@ -689,7 +757,12 @@ summary(Cavernas_ACI_Noche)
 graph_ADI_Tarde_yunga + graph_ADI_Noche_yunga +
   plot_annotation(title = 'ADI Yunga')
 ```
-**Fig 11**: Regresión lineal de los datos de ADI obtenidos para las dos locaciónes de Yungas a partir de franjas horarias: Tarde (Izq) y Noche (Der). Estos datos arrojan un comportamiento inverso al observado en ACI ya que Astilleros presenta un comportamiento decreciente hacia la noche. Mayuato mantiene sus datos estables durante toda la medición.
+
+**Fig 12**: Regresión lineal de los datos de ADI obtenidos para las dos
+locaciónes de Yungas a partir de franjas horarias: Tarde (Izq) y Noche
+(Der). Estos datos arrojan un comportamiento inverso al observado en ACI
+ya que Astilleros presenta un comportamiento decreciente hacia la noche.
+Mayuato mantiene sus datos estables durante toda la medición.
 
 ```{r, fig.align ='center', message=FALSE}
 
@@ -706,28 +779,20 @@ summary(Cavernas_ADI_Tarde)
 summary(Acay_ADI_Noche)
 summary(Cavernas_ADI_Noche)
 ```
-**Fig 12**: Regresión lineal de los datos de ADI obtenidos para las dos locaciónes de Puna a partir de franjas horarias: Tarde (Izq) y Noche (Der). Aqui es posible inferir un comportamiento similar en ambas locaciónes. Si bien, los datos difieren entre Acay y Cavernas, ambas presentan un comportamiento similar, sin exponer variaciones entre franjas horarias.
 
-A partir de una regresión lineal entre el total de los valores por región, los resultados arrojados informan un crecimiento  de ACI mayor entre dia y noche para la región de Yungas que para las locaciones de Puna. En cuanto a el Indice de Diversidad Acústica (ADI), las regresiones lineales no permiten inferir resultados significativos.
+**Fig 13**: Regresión lineal de los datos de ADI obtenidos para las dos
+locaciónes de Puna a partir de franjas horarias: Tarde (Izq) y Noche
+(Der). Aqui es posible inferir un comportamiento similar en ambas
+locaciónes. Si bien, los datos difieren entre Acay y Cavernas, ambas
+presentan un comportamiento similar, sin exponer variaciones entre
+franjas horarias.
 
-```{r, fig.align ='center', message=FALSE}
+A partir de una regresión lineal entre el total de los valores por
+región, los resultados arrojados informan un crecimiento de ACI mayor
+entre dia y noche para la región de Yungas que para las locaciones de
+Puna. En cuanto a el Indice de Diversidad Acústica (ADI), las
+regresiones lineales no permiten inferir resultados significativos.
 
-#Graficadores de ACI
-graph_ACI_Region <- Datos_region_ACI %>%
-  mutate(franja_horaria = factor(franja_horaria)) %>%
-  ggplot(aes(x = as.numeric(franja_horaria) - 1,
-             y = ACI, color=region)) +
-  geom_point(position = position_jitter(width = 0.15)) +
-  geom_smooth(method = lm, se = FALSE, fullrange = TRUE) +
-  scale_x_continuous(breaks = c(0, 1), 
-                     minor_breaks = c(0, 1),
-                     limits = c(-0.2, 1.2),
-                     labels = c("Dia", "Noche")) +
-  labs(x = "Franja Horaria",
-       y = "ACI")
-graph_ACI_Region
-```
-**Fig 13**: Valores de ACI agrupador por región según franja horaria.
 
 ```{r, fig.align ='center', message=FALSE}
 #T.Test de ACI
@@ -744,59 +809,6 @@ t.test(Dia_ACI_Puna$ACI, Noche_AC_Puna$ACI)
 
 ```{r, fig.align ='center', message=FALSE}
 
-#Graficadores de ADI
-
-graph_ADI_Region <- Datos_region_ADI %>%
-  mutate(franja_horaria = factor(franja_horaria)) %>%
-  ggplot(aes(x = as.numeric(franja_horaria) - 1,
-             y = ADI, color=region)) +
-  geom_point(position = position_jitter(width = 0.15)) +
-  geom_smooth(method = lm, se = FALSE, fullrange = TRUE) +
-  scale_x_continuous(breaks = c(0, 1), 
-                     minor_breaks = c(0, 1),
-                     limits = c(-0.2, 1.2),
-                     labels = c("Dia", "Noche")) +
-  labs(x = "Franja Horaria",
-       y = "ADI")
-graph_ADI_Region
-
-## Esto lo elimine porque no de de donde viene!
-# Fig.ay <- Datos_region_ADI %>%
-#   mutate(franja_horaria = factor(franja_horaria)) %>%
-#   filter(lugar!="Cavernas") %>%
-#   ggplot(aes(x = as.numeric(franja_horaria) - 1,
-#              y = ADI, color=region,show.legend=FALSE)) +
-#   geom_point(position = position_jitter(width = 0.15),show.legend=FALSE) +
-#   ylim(0.5,2.3)+
-#   geom_smooth(method = lm, se = FALSE, fullrange = TRUE,show.legend=FALSE) +
-#   scale_x_continuous(breaks = c(0, 1), 
-#                      minor_breaks = c(0, 1),
-#                      limits = c(-0.2, 1.2),
-#                      labels = c("Dia", "Noche")) +
-#   labs(x = "Franja Horaria",
-#        y = "ADI",title="Acay")
-# 
-# Fig.cnas <- Datos_region_ADI %>%
-#   mutate(franja_horaria = factor(franja_horaria)) %>%
-#   filter(lugar!="Acay") %>%
-#   ggplot(aes(x = as.numeric(franja_horaria) - 1,
-#              y = ADI, color=region)) +
-#   geom_point(position = position_jitter(width = 0.15)) +
-#   ylim(0.5,2.3)+
-#   geom_smooth(method = lm, se = FALSE, fullrange = TRUE) +
-#   scale_x_continuous(breaks = c(0, 1), 
-#                      minor_breaks = c(0, 1),
-#                      limits = c(-0.2, 1.2),
-#                      labels = c("Dia", "Noche")) +
-#   labs(x = "Franja Horaria",
-#        y = "ADI",title="Cavernas")
-# 
-# Fig.ay | Fig.cnas
-```
-**Fig 14`**: Valores de ADI agrupados por región y Franja Horaria.
-
-```{r, fig.align ='center', message=FALSE}
-
 #T.Test de ADI
 
 Dia_ADI_Yunga <- Datos_region_ADI %>% filter(franja_horaria=="Dia",region=="Yunga")
@@ -809,19 +821,40 @@ t.test(Dia_ACI_Puna$ADI, Noche_ADI_Puna$ADI)
 
 ```
 
-
-
 ## CONCLUSIÓN
 
-Los datos expuestos sugieren que, en terminos generales ambos indices bioacústicos analizados son significativamente mayores en la región de Yungas que en la Puna. A partir del analisis estadistico, realizamos una correlación con las distribuciones normales correspondientes a la media y el desvio estandar en cada caso, con las graficas de densidad. Se corroboró que las resultantes, sin outliers, se asemejan a una curva gaussiana (distribución normal).<br>
-<br>
-Haciendo mención a las locaciones especificas: <br>
-  - Si bien Cavernas y Acay pertenecen a la misma región, es decir, mismo clima y area y los valores arrojado por el t-test no exponen una diferencia significativa (p = 0.08), Acay expone los valores mas disimiles, haciendo que Cavernas tenga mas relación con los indices obtenidos en Yungas que en Poma.<br>
-  - Si bien, los valores arrojados en el T-test entre Cavernas y Mayuato exponen una diferencia significativa (p = 0.007),  teniendo en cuenta las diferencias entre ambas regiones, eran esperables resultados mucho mas divergentes. Por lo tanto, no es un resoltado que nos permita inferir dicha diferencia. Vemos necesario realizar mas pruebas que permitan profundizar en el analisis. <br>
-<br>
-Haciendo mención a las franjas horarias (Dia/Noche): <br>
-  - El Indice de Distribución Acústica (ADI), expone un crecimiento notorio para Acay entre Dia y Noche, en comparación con el resto de las locaciones. A partir de la escucha de las resultantes sonoras, es posible atribuir dicha diferencia, a los fuertes vientos registrados en Acay. De hecho, el aumento durante la noche, está relacionada con el cese de fuertes vientos. <br>
-  - El estudio de regresión lineal a partir del análisis del Indice de Complejidad Acústica (ACI), agrupando por regiones, arroja dos comportamientos divergentes entre Puna y Yunga. Partiendo de la hipótesis planteada, es observable que la región de la Puna se ciñe al comportamiento presuesto (mayor actividad biofona durante el día que en la noche), sin embargo, la región de Yungas, presenta un aumento en ACI durante la noche en comparación al día. Cotejando con las grabaciones de campo, notamos mayor actividad de anuros e insectos en esa franja horaria, sobre todo en Astileros. <br>
+Los datos expuestos sugieren que, en terminos generales ambos indices
+bioacústicos analizados son significativamente mayores en la región de
+Yungas que en la Puna. A partir del analisis estadistico, realizamos una
+correlación con las distribuciones normales correspondientes a la media
+y el desvio estandar en cada caso, con las graficas de densidad. Se
+corroboró que las resultantes, sin outliers, se asemejan a una curva
+gaussiana (distribución normal).<br> <br> Haciendo mención a las
+locaciones especificas: <br> - Si bien Cavernas y Acay pertenecen a la
+misma región, es decir, mismo clima y area y los valores arrojado por el
+t-test no exponen una diferencia significativa (p = 0.08), Acay expone
+los valores mas disimiles, haciendo que Cavernas tenga mas relación con
+los indices obtenidos en Yungas que en Poma.<br> - Si bien, los valores
+arrojados en el T-test entre Cavernas y Mayuato exponen una diferencia
+significativa (p = 0.007), teniendo en cuenta las diferencias entre
+ambas regiones, eran esperables resultados mucho mas divergentes. Por lo
+tanto, no es un resoltado que nos permita inferir dicha diferencia.
+Vemos necesario realizar mas pruebas que permitan profundizar en el
+analisis. <br> <br> Haciendo mención a las franjas horarias (Dia/Noche):
+<br> - El Indice de Distribución Acústica (ADI), expone un crecimiento
+notorio para Acay entre Dia y Noche, en comparación con el resto de las
+locaciones. A partir de la escucha de las resultantes sonoras, es
+posible atribuir dicha diferencia, a los fuertes vientos registrados en
+Acay. De hecho, el aumento durante la noche, está relacionada con el
+cese de fuertes vientos. <br> - El estudio de regresión lineal a partir
+del análisis del Indice de Complejidad Acústica (ACI), agrupando por
+regiones, arroja dos comportamientos divergentes entre Puna y Yunga.
+Partiendo de la hipótesis planteada, es observable que la región de la
+Puna se ciñe al comportamiento presuesto (mayor actividad biofona
+durante el día que en la noche), sin embargo, la región de Yungas,
+presenta un aumento en ACI durante la noche en comparación al día.
+Cotejando con las grabaciones de campo, notamos mayor actividad de
+anuros e insectos en esa franja horaria, sobre todo en Astileros. <br>
 <br>
 
 **Extracto de Astilleros:**
@@ -830,8 +863,15 @@ Haciendo mención a las franjas horarias (Dia/Noche): <br>
 
 ## DISCUSIÓN
 
-<br>
-Por último, para cotejar que los cambios de actividad por franja horaria están fuertemente ligados a la región, realizamos un t-test aunando valores de Dia/Noche de todas las locaciones. Al realizar una regresión lineal observamos que las pendientes son opuestas, por lo que concluimos que no es recomendable inferir la actividad sonora por franja horaria sin tener en cuenta cada región. Asimismo creemos importante, para futuras investigaciones, considera la epoca del año, ya que estos registros fueron realizados en otoño y es muy factible que su actividad se vea considerablemten modificada en otras estaciones.
+<br> Por último, para cotejar que los cambios de actividad por franja
+horaria están fuertemente ligados a la región, realizamos un t-test
+aunando valores de Dia/Noche de todas las locaciones. Al realizar una
+regresión lineal observamos que las pendientes son opuestas, por lo que
+concluimos que no es recomendable inferir la actividad sonora por franja
+horaria sin tener en cuenta cada región. Asimismo creemos importante,
+para futuras investigaciones, considera la epoca del año, ya que estos
+registros fueron realizados en otoño y es muy factible que su actividad
+se vea considerablemten modificada en otras estaciones.
 
 ```{r, message=FALSE}
 
